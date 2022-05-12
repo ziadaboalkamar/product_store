@@ -127,7 +127,7 @@ $(function () {
   }
 
   // Repeater init
-  if (sourceItem.length) {
+
     sourceItem.on('submit', function (e) {
       e.preventDefault();
     });
@@ -139,7 +139,7 @@ $(function () {
         $(this).slideUp();
       }
     });
-  }
+
 
   // Prevent dropdown from closing on tax change
   $(document).on('click', '.tax-select', function (e) {

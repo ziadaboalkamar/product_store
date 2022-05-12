@@ -39,6 +39,12 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/product/edit/{id}',[ProductController::class,'edit'])->name('product.edit');
     Route::post('/product/update/{id}',[ProductController::class,'update'])->name('product.update');
     Route::post('/product/delete/{id}',[ProductController::class,'delete'])->name('product.delete');
-
+    Route::get('/Invoice/sale',[InvoiceController::class,'saleIndex'])->name('admin.invoice.sale');
+    Route::get('/Invoice/buy',[InvoiceController::class,'buyIndex'])->name('admin.invoice.buy');
+    Route::get('/Invoice/buy/create',[InvoiceController::class,'createBuy'])->name('admin.invoice.buy.create');
+    Route::post('/Invoice/buy/store',[InvoiceController::class,'storeBuy'])->name('admin.invoice.buy.store');
+    Route::get('/Invoice/buy/show/{id}',[InvoiceController::class,'show'])->name('admin.invoice.buy.show');
+    Route::get('/Invoice/sale/create',[InvoiceController::class,'createSale'])->name('admin.invoice.sale.create');
+    Route::post('/Invoice/sale/store',[InvoiceController::class,'storeSale'])->name('admin.invoice.sale.store');
 
 });

@@ -23,7 +23,7 @@
                         <div class="content-header-left col-md-9 col-12 mb-2">
                             <div class="row breadcrumbs-top">
                                 <div class="col-12">
-                                    <h2 class="content-header-title float-left mb-0">الاصناف</h2>
+                                    <h2 class="content-header-title float-left mb-0">فاتور الشراء</h2>
 
                                 </div>
                             </div>
@@ -39,9 +39,9 @@
                                         <thead class="thead-light">
                                         <tr>
                                             <th>اسم العميل</th>
-                                            <th>المنتج</th>
-                                            <th>المخزن</th>
                                             <th>السعر</th>
+                                            <th>تاريخ الانشاء</th>
+
                                             <th>العمليات</th>
                                         </tr>
                                         </thead>
@@ -51,24 +51,24 @@
                             </div>
                             <!-- list section end -->
                         </section>
-                        <form action="{{route('product.create')}}" method="get" class="d-none" id="create_new">
+                        <form action="{{route('admin.invoice.buy.create')}}" method="get" class="d-none" id="create_new">
                             @csrf
                             <button type="submit"></button>
                         </form>
-                    @foreach ($products as $product)
+                    @foreach ($invoices as $invoice)
                         <!-- Modal -->
-                            <div class="modal fade" id="delete{{$product->id}}" tabindex="-1" role="dialog"
+                            <div class="modal fade" id="delete{{$invoice->id}}" tabindex="-1" role="dialog"
                                  aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel"> حذف مخزن <span class="text-primary">{{ $product->name }}</span></h5>
+                                            <h5 class="modal-title" id="exampleModalLabel"> حذف فاتورة <span class="text-primary">{{ $invoice->client_name }}</span></h5>
                                             <button type="button" class="close" data-dismiss="modal"
                                                     aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        <form action="{{ route('product.delete',$product->id) }}" method="post">
+                                        <form action="{{ route('product.delete',$invoice->id) }}" method="post">
                                             {{ csrf_field() }}
                                             <div class="modal-body">
                                                 <h5>هل انت متاكد من حذف البيانات</h5>
@@ -128,13 +128,14 @@
                 "url": "{{ asset('app-assets/datatable-lang/' . app()->getLocale() . '.json') }}"
             },
             ajax: {
-                url: '{{ route('admin.product') }}',
+                url: '{{ route('admin.invoice.buy') }}',
             },
             columns: [
-                {data: 'name', name:'name',searchable: true},
-                {data: 'count', name:'count',searchable: true},
-                {data: 'price', name:'price',searchable: true},
-                {data: 'store_id', name:'store_id',searchable: true},
+                {data: 'client_name', name:'client_name',searchable: true},
+
+                {data: 'total', name:'total',searchable: true},
+
+                {data: 'date_of_invoice', name:'Date_of_invoice',searchable: true},
 
                 {data:''}
             ],
@@ -214,17 +215,12 @@
                             }) +
                             '</a>' +
                             '<div class="dropdown-menu dropdown-menu-right">' +
-                            '<a href="product/edit/'+ id +'" class="dropdown-item">' +
+                            '<a href="buy/show/'+ id +'" class="dropdown-item">' +
                             feather.icons['archive'].toSvg({
                                 class: 'font-small-4 mr-50'
                             }) +
-                            'تعديل</a>' +
-                            '<a href="javascript:void()" class="dropdown-item" data-toggle="modal"' +
-                            ' data-target="#delete' + id + '">' +
-                            feather.icons['trash-2'].toSvg({
-                                class: 'font-small-4 mr-50'
-                            }) +
-                            'حذف</a></div>' +
+                            'عرض</a>' +
+                        ' </div>' +
                             '</div>' +
                             '</div>'
                         );

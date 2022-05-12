@@ -42,7 +42,7 @@ class ProductController extends Controller
         return view('dashboard.pages.products.create',compact('stores'));
     }
     public function store(Request $request){
-        try {
+
             $request->validate([
                 'name' => 'required|string',
                 'price' => 'required|numeric',
@@ -63,11 +63,7 @@ class ProductController extends Controller
             toastr()->success(__('تم حفظ البيانات بنجاح'));
 
             return redirect()->route('admin.product') ;
-        }catch (\Exception$exception){
-            toastr()->error(__('يوجد خطاء ما '));
-            return redirect()->route('admin.product') ;
 
-        }
     }
     public function edit($id){
 
@@ -79,7 +75,7 @@ class ProductController extends Controller
         return view('dashboard.pages.products.edit', compact('stores','product'));
     }
     public function update(Request $request , $id){
-        try {
+
             $request->validate([
                 'name' => 'required|string',
                 'price' => 'required|numeric',
@@ -101,11 +97,7 @@ class ProductController extends Controller
             toastr()->success(__('تم تحديث البيانات بنجاح'));
 
             return redirect()->route('admin.product') ;
-        }catch (\Exception$exception){
-            toastr()->error(__('يوجد خطاء ما '));
-            return redirect()->route('admin.product') ;
 
-        }
     }
     public function delete($id){
         $product = Product::find($id);

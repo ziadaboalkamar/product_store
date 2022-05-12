@@ -50,7 +50,20 @@
 
                 </ul>
             </li>
+            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather='truck'></i><span
+                        class="menu-title text-truncate" data-i18n="Invoice">الفواتير</span><span
+                        class="badge badge-light-warning badge-pill ml-auto mr-1">{{ \App\Models\Invoice::count() }}</span></a>
+                <ul class="menu-content">
+                    <li><a class="d-flex align-items-center" href="{{ route('admin.invoice.sale') }}"><i
+                                data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">فواتير
+                                    البيع</span></a>
+                    <li><a class="d-flex align-items-center" href="{{route('admin.invoice.buy')}}"><i
+                                data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">فواتير
+                                    الشراء</span></a>
+                    </li>
 
+                </ul>
+            </li>
         </ul>
     </div>
 </div>

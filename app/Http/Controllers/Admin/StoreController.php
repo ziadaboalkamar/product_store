@@ -37,7 +37,7 @@ class StoreController extends Controller
 
 
     public function store(Request $request){
-        try {
+
             $request->validate([
                 'name' => 'required|string',
             ],[
@@ -51,11 +51,7 @@ class StoreController extends Controller
             toastr()->success(__('تم حفظ البيانات بنجاح'));
 
             return redirect()->route('admin.stores') ;
-        }catch (\Exception $exception){
-            toastr()->error(__('يوجد خطاء ما '));
-            return redirect()->route('admin.product') ;
 
-        }
     }
     public function edit($id)
     {
@@ -66,7 +62,7 @@ class StoreController extends Controller
         return view('dashboard.pages.stores.edit', compact('store'));
     }
     public function update(Request $request,$id){
-        try {
+
             $request->validate([
                 'name' => 'required|string',
             ],[
@@ -81,10 +77,7 @@ class StoreController extends Controller
             toastr()->success(__('تم تعديل البيانات بنجاح'));
 
             return redirect()->route('cities.index') ;
-        }catch (\Exception $exception){
-            toastr()->error(__('يوجد خطاء ما '));
-            return redirect()->route('admin.stores') ;
-        }
+
     }
     public function delete($id){
         $store = Store::find($id);
