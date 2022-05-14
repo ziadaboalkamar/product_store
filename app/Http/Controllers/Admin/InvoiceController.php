@@ -66,6 +66,7 @@ class InvoiceController extends Controller
     }
     public function storeBuy(Request $request){
 $total = 0;
+
             $project = Invoice::insertGetId([
                 'client_name'=>$request->customer,
                 'date_of_invoice'=>$request->date,
@@ -74,7 +75,7 @@ $total = 0;
             ]);
 
             $attachment_array = $request->invoice;
-
+$count = [];
             for ($i = 0; $i < count($attachment_array); $i++) {
                 $product = Product::where('id',$attachment_array[$i]["product_id"])->get();
                 $total +=$product[0]->price*$attachment_array[$i]["quantity"];
@@ -84,7 +85,16 @@ $total = 0;
                     'count'=>$attachment_array[$i]["quantity"],
 
                 ]);
+                $count[$i] = $product[0]['count'] + $attachment_array[$i]["quantity"];
+                Product::where('id',$attachment_array[$i]["product_id"])->update([
+                    'count'=>$count[$i],
+                ]);
+
+
+
+
             }
+
 
         Invoice::where('id', $project)->update([
         'total' => $total
@@ -110,16 +120,21 @@ $total = 0;
         ]);
 
         $attachment_array = $request->invoice;
-
+        $count = [];
         for ($i = 0; $i < count($attachment_array); $i++) {
             $product = Product::where('id',$attachment_array[$i]["product_id"])->get();
             $total +=$product[0]->price*$attachment_array[$i]["quantity"];
+            $count[$i] = $product[0]['count'] - $attachment_array[$i]["quantity"];
+            Product::where('id',$attachment_array[$i]["product_id"])->update([
+                'count'=>$count[$i],
+            ]);
             ProductInvoice::create([
                 'inovice_id' =>$project,
                 'product_id'=> $attachment_array[$i]["product_id"],
                 'count'=>$attachment_array[$i]["quantity"],
 
             ]);
+
         }
 
         Invoice::where('id', $project)->update([
